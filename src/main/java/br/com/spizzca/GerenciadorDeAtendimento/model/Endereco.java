@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @AllArgsConstructor
 @Data
-@Embeddable
+@Entity
 public class Endereco {
 
     @Column(name = "id", nullable = false)
@@ -35,7 +35,18 @@ public class Endereco {
     @Column(name = "cep", nullable = true, length = 20)
     private String cep;
 
+    @OneToMany
+    private Cliente cliente;
+
     public Endereco() {
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public long getId() {

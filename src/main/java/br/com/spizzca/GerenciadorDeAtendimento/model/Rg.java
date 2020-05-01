@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Embeddable
+@Entity
 public class Rg {
     @Column(name = "id", nullable = false)
     @Id
@@ -28,11 +28,23 @@ public class Rg {
     @Column(name = "data_exp", nullable = false)
     private Date dataExp;
 
+    @OneToOne
+    private Cliente cliente;
+
     public Rg(String rg, String orgao, String[] uf, Date dataExp) {
         this.rg = rg;
         this.orgao = orgao;
         this.uf = uf;
         this.dataExp = dataExp;
+    }
+
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public long getId() {

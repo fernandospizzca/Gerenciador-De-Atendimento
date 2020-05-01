@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 
-
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Embeddable
+@Entity
 public class Atendimento {
 
     @Id
@@ -23,10 +23,14 @@ public class Atendimento {
     @Column(name = "desc_atendimento", nullable = true, length = 1000)
     private String descAtendimento;
 
+    @ManyToOne
+    private Cliente cliente;
+
     public Atendimento(long cliente_id, long protocolo, Date dataAtendimento, String descAtendimento) {
         this.dataAtendimento = dataAtendimento;
         this.descAtendimento = descAtendimento;
     }
+
 
     public long getProtocolo() {
         return protocolo;
@@ -46,5 +50,13 @@ public class Atendimento {
 
     public void setDescAtendimento(String descAtendimento) {
         this.descAtendimento = descAtendimento;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

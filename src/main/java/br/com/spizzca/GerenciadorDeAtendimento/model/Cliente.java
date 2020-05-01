@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,14 +24,14 @@ public class Cliente {
     @Column(name = "cpf", nullable = false, length = 14, unique = true)
     private String cpf;
 
-    @Embedded
+    @OneToOne
     private Rg rg;
 
-    @Embedded
+    @ManyToOne
     private Endereco endereco;
 
-    @Embedded
-    private Atendimento atendimento;
+    @OneToMany
+    private List<Atendimento> atendimentos;
 
     @Column(name = "data_cadastro", nullable = false)
     private Date dataCadastro;
@@ -42,7 +43,7 @@ public class Cliente {
         this.dataCadastro = new Date();
     }
 
-    public static long getCodigo() {
+    public long getCodigo() {
         return codigo;
     }
 
@@ -66,37 +67,35 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    @OneToOne
+
     public Rg getRg() {
         return rg;
     }
 
-    @OneToOne
+
     public void setRg(Rg rg) {
         this.rg = rg;
     }
 
-    @OneToOne
+
     public Endereco getEndereco() {
         return endereco;
     }
 
-    @OneToOne
+
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
-    @OneToMany
-    public Atendimento getAtendimento() {
-        return atendimento;
-    }
-
-    @OneToMany
-    public void setAtendimento(Atendimento atendimento) {
-        this.atendimento = atendimento;
-    }
-
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public List<Atendimento> getAtendimentos() {
+        return atendimentos;
+    }
+
+    public void setAtendimentos(List<Atendimento> atendimentos) {
+        this.atendimentos = atendimentos;
     }
 }
