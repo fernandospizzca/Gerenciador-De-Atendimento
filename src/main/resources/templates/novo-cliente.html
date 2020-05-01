@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Gerenciador de Atendimentos</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/styleNovoCliente.css">
+    <script type="text/javascript" src="javascript/mainNovoCliente.js"></script>
+</head>
+
+<body>
+    <h2>Cadastrar Cliente</h2>
+
+    <form th:action="@{/novo-cliente}" th:object="${cliente}" method="post">
+        <p> Nome <input type="text" name="nome" th:field="*{nome}" th:placeholder="Nome" /><br>
+            <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome Error</span></p>
+    
+        <p> CPF <input type="text" name="cpf" th:field="*{cpf}" th:placeholder="CPF"/><br>
+        <span th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}">CPF Error</span></p>
+        <br/>
+        <button type="submit">Adicionar</button>
+    </form>
+
+    <br>
+    <a th:href="@{/clientes}">Carteira de Clientes</a>
+</body>
+</html>
