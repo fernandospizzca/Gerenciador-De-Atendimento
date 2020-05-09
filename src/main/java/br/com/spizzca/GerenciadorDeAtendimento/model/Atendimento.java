@@ -23,14 +23,31 @@ public class Atendimento {
     @Column(name = "desc_atendimento", nullable = true, length = 1000)
     private String descAtendimento;
 
+    @Column(name = "cod_cliente", nullable = false)
+    private long codCliente;
+
     @ManyToOne
+    @JoinColumn(name = "atendimento_ibfk_1")
     private Cliente cliente;
 
-    public Atendimento(long cliente_id, long protocolo, Date dataAtendimento, String descAtendimento) {
+
+    public Atendimento(long codCliente, long protocolo, Date dataAtendimento, String descAtendimento) {
         this.dataAtendimento = dataAtendimento;
         this.descAtendimento = descAtendimento;
+        this.codCliente = cliente.getCodigo();
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public long getCodCliente() {
+        return codCliente;
+    }
 
     public long getProtocolo() {
         return protocolo;
@@ -52,11 +69,4 @@ public class Atendimento {
         this.descAtendimento = descAtendimento;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
 }

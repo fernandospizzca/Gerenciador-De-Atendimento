@@ -12,12 +12,10 @@ import java.util.Date;
 @Data
 @Entity
 public class Rg {
-    @Column(name = "id", nullable = false)
-    @Id
-    private long id;
 
     @Column(name = "rg", nullable = false, length = 20, unique = true)
-    private String rg;
+    @Id
+    private String NumRg;
 
     @Column(name = "orgao", nullable = false, length = 10)
     private String orgao;
@@ -28,14 +26,19 @@ public class Rg {
     @Column(name = "data_exp", nullable = false)
     private Date dataExp;
 
+    @Column(name = "cod_cliente", nullable = false)
+    private long codCliente;
+
     @OneToOne
+    @JoinColumn(name = "rg_ibfk_1")
     private Cliente cliente;
 
-    public Rg(String rg, String orgao, String[] uf, Date dataExp) {
-        this.rg = rg;
+    public Rg(String NumRg, String orgao, String[] uf, Date dataExp) {
+        this.NumRg = NumRg;
         this.orgao = orgao;
         this.uf = uf;
         this.dataExp = dataExp;
+        this.codCliente = cliente.getCodigo();
     }
 
 
@@ -47,16 +50,13 @@ public class Rg {
         this.cliente = cliente;
     }
 
-    public long getId() {
-        return id;
+
+    public String getNumRg() {
+        return NumRg;
     }
 
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
+    public void setNumRg(String numRg) {
+        this.NumRg = numRg;
     }
 
     public String getOrgao() {

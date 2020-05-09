@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Linux (x86_64)
 --
 -- Host: localhost    Database: dbclientes
 -- ------------------------------------------------------
--- Server version	5.5.5-10.4.11-MariaDB
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,23 +21,17 @@
 
 DROP TABLE IF EXISTS `atendimento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `atendimento` (
-  `protocolo` int(11) NOT NULL AUTO_INCREMENT,
+  `protocolo` int NOT NULL AUTO_INCREMENT,
   `data_atendimento` date NOT NULL,
   `desc_atendimento` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`protocolo`)
+  `cod_cliente` int NOT NULL,
+  PRIMARY KEY (`protocolo`),
+  KEY `fk_atendimento_cliente` (`cod_cliente`),
+  CONSTRAINT `atendimento_ibfk_1` FOREIGN KEY (`cod_cliente`) REFERENCES `cliente` (`codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `atendimento`
---
-
-LOCK TABLES `atendimento` WRITE;
-/*!40000 ALTER TABLE `atendimento` DISABLE KEYS */;
-/*!40000 ALTER TABLE `atendimento` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `cliente`
@@ -45,34 +39,19 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cliente` (
-  `codigo` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(50) DEFAULT NULL,
+  `codigo` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
   `cpf` varchar(14) NOT NULL,
   `data_cadastro` date NOT NULL,
-  `id_protocolo` int(11) NOT NULL,
-  `id_rg` int(11) NOT NULL,
-  `id_endereco` int(11) NOT NULL,
+  `id_endereco` int DEFAULT NULL,
   PRIMARY KEY (`codigo`),
   UNIQUE KEY `cpf` (`cpf`),
-  KEY `id_protocolo` (`id_protocolo`),
-  KEY `id_rg` (`id_rg`),
-  KEY `id_endereco` (`id_endereco`),
-  CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`id_protocolo`) REFERENCES `atendimento` (`protocolo`),
-  CONSTRAINT `cliente_ibfk_2` FOREIGN KEY (`id_rg`) REFERENCES `rg` (`id`),
-  CONSTRAINT `cliente_ibfk_3` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_endereco_idx` (`id_endereco`),
+  CONSTRAINT `fk_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `cliente`
---
-
-LOCK TABLES `cliente` WRITE;
-/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `endereco`
@@ -80,28 +59,19 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `endereco`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `endereco` (
   `logradouro` varchar(60) DEFAULT NULL,
-  `numero` int(11) DEFAULT NULL,
+  `numero` int DEFAULT NULL,
   `complemento` varchar(30) DEFAULT NULL,
   `bairro` varchar(30) DEFAULT NULL,
   `cidade` varchar(30) DEFAULT NULL,
   `uf` varchar(2) DEFAULT NULL,
   `cep` varchar(20) DEFAULT NULL,
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `endereco`
---
-
-LOCK TABLES `endereco` WRITE;
-/*!40000 ALTER TABLE `endereco` DISABLE KEYS */;
-/*!40000 ALTER TABLE `endereco` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `rg`
@@ -109,26 +79,18 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `rg`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rg` (
   `rg` varchar(20) NOT NULL,
   `orgao` varchar(10) NOT NULL,
   `uf` varchar(2) NOT NULL,
   `data_exp` date NOT NULL,
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `rg` (`rg`)
+  `cod_cliente` int NOT NULL,
+  UNIQUE KEY `rg` (`rg`),
+  KEY `rg_ibfk_1` (`cod_cliente`),
+  CONSTRAINT `rg_ibfk_1` FOREIGN KEY (`cod_cliente`) REFERENCES `cliente` (`codigo`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `rg`
---
-
-LOCK TABLES `rg` WRITE;
-/*!40000 ALTER TABLE `rg` DISABLE KEYS */;
-/*!40000 ALTER TABLE `rg` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -139,4 +101,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-30  0:51:57
+-- Dump completed on 2020-05-09 16:14:10

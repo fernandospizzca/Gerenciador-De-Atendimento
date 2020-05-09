@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +17,7 @@ public class Cliente {
 
     @Id
     @Column(name = "codigo", nullable = false)
-    private static long codigo;
+    private long codigo;
 
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
@@ -24,17 +25,15 @@ public class Cliente {
     @Column(name = "cpf", nullable = false, length = 14, unique = true)
     private String cpf;
 
-    @OneToOne
-    private Rg rg;
-
     @ManyToOne
+    @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
     @OneToMany
     private List<Atendimento> atendimentos;
 
     @Column(name = "data_cadastro", nullable = false)
-    private Date dataCadastro;
+    private Date dataCadastro = new Date();
 
     public Cliente(long codigo, String nome, String cpf, Date dataCadastro) {
         this.codigo = codigo;
@@ -67,21 +66,9 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-
-    public Rg getRg() {
-        return rg;
-    }
-
-
-    public void setRg(Rg rg) {
-        this.rg = rg;
-    }
-
-
     public Endereco getEndereco() {
         return endereco;
     }
-
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
@@ -98,4 +85,5 @@ public class Cliente {
     public void setAtendimentos(List<Atendimento> atendimentos) {
         this.atendimentos = atendimentos;
     }
+
 }

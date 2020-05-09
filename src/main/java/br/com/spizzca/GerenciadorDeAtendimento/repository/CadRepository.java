@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CadRepository extends JpaRepository<Cliente, Long> {
-    List<Cliente> findByNameContainingIgnoreCase(final String nome);
+    List<Cliente> findByNomeContainingIgnoreCase(final String nome);
 }

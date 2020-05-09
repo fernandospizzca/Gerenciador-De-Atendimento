@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @Data
@@ -36,18 +37,11 @@ public class Endereco {
     private String cep;
 
     @OneToMany
-    private Cliente cliente;
+    private List<Cliente> clientes;
 
     public Endereco() {
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
 
     public long getId() {
         return id;

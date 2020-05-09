@@ -35,7 +35,7 @@ public class CliController {
         final ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("clientes");
 
-        modelAndView.addObject("allClientes", repository.findByNameContainingIgnoreCase(nome));
+        modelAndView.addObject("allClientes", repository.findByNomeContainingIgnoreCase(nome));
         return modelAndView;
     }
 
@@ -47,16 +47,18 @@ public class CliController {
         return "novo-cliente";
     }
 
-    @PostMapping("/clientes")
+    @PostMapping("/novo-cliente")
     public String createCliente(@Valid @ModelAttribute Cliente cliente, BindingResult result, RedirectAttributes redirectAttributes){
 
         if(result.hasErrors()){
-            return "novo-cliente";
+            if (cliente.getCodigo() == 0) {
+                return "novo-contato";
+            }
         }
 
         repository.save(cliente);
 
-        redirectAttributes.addFlashAttribute("message", "Cliente cadatrado com sucesso.");
+        redirectAttributes.addFlashAttribute("message", "Cliente cadastrado com sucesso.");
 
         return "redirect:clientes";
 
