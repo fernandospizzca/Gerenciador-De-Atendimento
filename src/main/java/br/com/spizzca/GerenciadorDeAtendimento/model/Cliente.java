@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.DataFormatException;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,7 +25,11 @@ public class Cliente {
     @Column(name = "cpf", nullable = false, length = 14, unique = true)
     private String cpf;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_rg")
+    private Rg rg;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
@@ -52,6 +56,14 @@ public class Cliente {
 
     public String getCpf() {
         return cpf;
+    }
+
+    public Rg getRg() {
+        return rg;
+    }
+
+    public void setRg(Rg rg) {
+        this.rg = rg;
     }
 
     public Date getDataCadastro() {

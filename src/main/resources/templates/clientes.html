@@ -13,34 +13,38 @@
 
 <body>
     <h2>Carteira de Clientes</h2>
-    <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"/>
+    <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}" />
 
     <table>
         <tr>
             <th>Código</th>
             <th>Nome</th>
             <th>CPF</th>
-            <th></th>
+            <th>RG</th>
+            <th>Endereço</th>
+            <th>Data de Cadastro</th>
         </tr>
         <tr th:each="cliente : ${allClientes}">
             <td th:text="${cliente.codigo}"> </td>
             <td th:text="${cliente.nome}"> </td>
             <td th:text="${cliente.cpf}"> </td>
-            <!--<td th:text="${cliente.rg}"> </td>
+            <td th:text="${cliente.rg}"> </td>
             <td th:text="${cliente.endereco}"> </td>
-            <td th:text="${cliente.atendimentos}"> </td>-->
             <td th:text="${cliente.dataCadastro}"> </td>
 
             <td>
-                <a th:href="@{/clientes/__${cliente.codigo}__/delete}" onClick="return confirm('Deseja Excluir?')">Excluir</a>
+                <a th:href="@{/clientes/__${cliente.codigo}__/delete}"
+                    onClick="return confirm('Deseja Excluir?')">Excluir</a>
                 <a th:href="@{/update-cliente/__${cliente.codigo}__}">Atualizar</a>
+                <a th:href="@{/atendimentos/__${atendimento}__}">Atendimentos</a>
             </td>
         </tr>
     </table>
 
     <br>
 
-    <a href="#" th:href="@{/novo-cliente}">Cadastrar Cliente</a> | <a href="#" th:href="@{/clientes}">Lista de Clientes</a>
+    <a href="#" th:href="@{/novo-cliente}">Cadastrar Cliente</a> | <a href="#" th:href="@{/clientes}">Lista de
+        Clientes</a>
 
     <form th:action="@{/search}" method="get">
         <input type="text" name="nome" /> <button type="submit">Search</button>
@@ -49,12 +53,17 @@
                 <th>Código</th>
                 <th>Nome</th>
                 <th>CPF</th>
-                <th></th>
+                <th>RG</th>
+                <th>Endereço</th>
+                <th>Data de Cadastro</th>
             </tr>
             <tr th:each="cliente : ${search}">
                 <td th:text="${cliente.codigo}"> </td>
                 <td th:text="${cliente.nome}"> </td>
                 <td th:text="${cliente.cpf}"> </td>
+                <td>
+                    <a th:href="@{/atendimentos/__${cliente.atendimentos}__}">Atendimentos</a>
+                </td>
             </tr>
         </table>
     </form>

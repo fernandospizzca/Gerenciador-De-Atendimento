@@ -1,6 +1,7 @@
 package br.com.spizzca.GerenciadorDeAtendimento.controller;
 
 import br.com.spizzca.GerenciadorDeAtendimento.model.Cliente;
+import br.com.spizzca.GerenciadorDeAtendimento.model.Rg;
 import br.com.spizzca.GerenciadorDeAtendimento.repository.CadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

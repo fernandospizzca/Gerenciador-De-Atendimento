@@ -13,50 +13,36 @@ import java.util.Date;
 @Entity
 public class Rg {
 
-    @Column(name = "rg", nullable = false, length = 20, unique = true)
-    @Id
-    private String NumRg;
+    @Column(name = "id", nullable = false, unique = true)
+    private long id;
 
-    @Column(name = "orgao", nullable = false, length = 10)
+    @Column(name = "numero", nullable = false, length = 20)
+    @Id
+    private String numRg;
+
+    @Column(name = "orgao", nullable = true, length = 10)
     private String orgao;
 
-    @Column(name = "uf", nullable = false, length = 2)
-    private String[] uf = new String[2];
+    @Column(name = "uf", nullable = true, length = 2)
+    private String uf;
 
-    @Column(name = "data_exp", nullable = false)
+    @Column(name = "data_exp", nullable = true)
     private Date dataExp;
 
-    @Column(name = "cod_cliente", nullable = false)
-    private long codCliente;
-
-    @OneToOne
-    @JoinColumn(name = "rg_ibfk_1")
-    private Cliente cliente;
-
-    public Rg(String NumRg, String orgao, String[] uf, Date dataExp) {
-        this.NumRg = NumRg;
+    public Rg(String NumRg, String orgao, String uf, Date dataExp) {
+        this.numRg = NumRg;
         this.orgao = orgao;
         this.uf = uf;
         this.dataExp = dataExp;
-        this.codCliente = cliente.getCodigo();
-    }
-
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
     }
 
 
     public String getNumRg() {
-        return NumRg;
+        return numRg;
     }
 
     public void setNumRg(String numRg) {
-        this.NumRg = numRg;
+        this.numRg = numRg;
     }
 
     public String getOrgao() {
@@ -67,16 +53,16 @@ public class Rg {
         this.orgao = orgao;
     }
 
-    public String[] getUf() {
+    public String getUf() {
         return uf;
     }
 
-    public void setUf(String[] uf) {
+    public void setUf(String uf) {
         this.uf = uf;
     }
 
-    public Date getDataExp() {
-        return dataExp;
+    public Date getDataExp(Date dataExp) {
+        return this.dataExp;
     }
 
     public void setDataExp(Date dataExp) {

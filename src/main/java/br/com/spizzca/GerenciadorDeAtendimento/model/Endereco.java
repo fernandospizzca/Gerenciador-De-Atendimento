@@ -9,11 +9,12 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
-public class Endereco {
+public class Endereco{
 
     @Column(name = "id", nullable = false)
     @Id
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long  id;
 
     @Column(name = "logradouro", nullable = true, length = 60)
     private String logradouro;
@@ -31,13 +32,17 @@ public class Endereco {
     private String cidade;
 
     @Column(name = "uf", nullable = true, length = 2)
-    private String[] uf = new String[2];
+    private String uf;
+
+
 
     @Column(name = "cep", nullable = true, length = 20)
     private String cep;
+    
 
+    /*
     @OneToMany
-    private List<Cliente> clientes;
+    private List<Cliente> clientes;*/
 
     public Endereco() {
     }
@@ -87,11 +92,11 @@ public class Endereco {
         this.cidade = cidade;
     }
 
-    public String[] getUf() {
+    public String getUf() {
         return uf;
     }
 
-    public void setUf(String[] uf) {
+    public void setUf(String uf) {
         this.uf = uf;
     }
 
